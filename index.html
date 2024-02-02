@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cognitive Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="questionDisplay" style="align-items: center;">
+    <div class="countdown-container">
+      <span class="countdown-label">Remaining Time：</span>
+      <span class="countdown" id="countdown"></span>
+    </div>
+    <div class="question-wrapper">
+      <div class="question-container">
+        <img src="" alt="" class="question-image">
+      </div>
+    </div>
+    <div class="options">
+    </div>
+    <button id="nextButton" onclick="nextQuestion()">Next</button>
+  </div>
+
+  <div id="resultsDisplay" class="results-display"></div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
