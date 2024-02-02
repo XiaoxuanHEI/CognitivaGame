@@ -228,7 +228,7 @@ function displayResults() {
     if (result.explanation) {
       const explanationImage = document.createElement('img');
       explanationImage.src = result.explanation;
-      explanationImage.style.maxWidth = '1000px'; // 设置最大宽度为600px
+      explanationImage.style.maxWidth = '600px'; // 设置最大宽度为600px
       resultElement.appendChild(explanationImage);
     }
   
