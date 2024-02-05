@@ -93,7 +93,7 @@ const questions = [
   {
     image: 'imgs/q14.png',
     options: ['A', 'B', 'C', 'D', 'E', 'F'],
-    correctAnswer: 'A',
+    correctAnswer: 'E',
     userAnswer: null,
     explanation: 'imgs/a14.png'
   },
@@ -111,27 +111,47 @@ const questions = [
     userAnswer: null,
     explanation: 'imgs/a16.png'
   },
-
 ];
 
-let currentQuestionIndex = 0;
-let countdownTimer; // 用于存储倒计时的定时器
 
-document.addEventListener('DOMContentLoaded', function () {
+let gameData = [];
+let userName;
+let startTime;
+let endTime;
+let timeSpent;
+let helpTime = "";
+let timeSpentBeforeHelp = "";
+let answer;
+
+let currentQuestionIndex = 0;
+let countdownTimer;
+
+
+function start() {
+  // Get user's name
+  userName = document.getElementById("nameInput").value;
+  document.getElementById('intro').style.display = 'none';
+  document.getElementById('overlay').style.display = 'none';
   loadQuestion();
-  // startCountdown(); // 开始第一题的倒计时
-});
+}
+
+
+// document.addEventListener('DOMContentLoaded', function () {
+//   loadQuestion();
+// });
 
 function loadQuestion() {
-  clearCountdown(); // 清除上一题的定时器
+  clearCountdown(); 
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  // 更新题目图片
+  startTime = new Date();
+
+
   const questionImage = document.querySelector('.question-image');
   questionImage.src = currentQuestion.image;
 
-  // 更新选项
+
   const optionsContainer = document.querySelector('.options');
   optionsContainer.innerHTML = '';
   currentQuestion.options.forEach(option => {
@@ -142,17 +162,18 @@ function loadQuestion() {
     radioInput.value = option;
     radioInput.addEventListener('change', () => {
       currentQuestion.userAnswer = option;
+      answer = option;
     });
     label.appendChild(radioInput);
     label.appendChild(document.createTextNode(` ${option}`));
     optionsContainer.appendChild(label);
   });
 
-  // 判断是否是最后一题，如果是，则将按钮文本修改为 "Show Result"，否则为 "Next"
+
   const nextButton = document.getElementById('nextButton');
   nextButton.textContent = currentQuestionIndex === questions.length - 1 ? 'Show Result' : 'Next';
   
-  startCountdown(); // 开始新题的倒计时
+  startCountdown(); 
 }
 
 function startCountdown() {
@@ -170,77 +191,127 @@ function startCountdown() {
 
     if (timeDifference <= 0) {
       countdownElement.textContent = '时间到!';
-      clearInterval(countdownTimer); // 清除定时器
-      nextQuestion(); // 跳转到下一题
+      clearInterval(countdownTimer); 
+      nextQuestion(); 
     }
   }
 
-  updateCountdown(); // 初始更新一次
-  countdownTimer = setInterval(updateCountdown, 1000); // 每秒更新一次
+  updateCountdown(); 
+  countdownTimer = setInterval(updateCountdown, 1000); 
 }
 
 function clearCountdown() {
-  clearInterval(countdownTimer); // 清除上一题的定时器
+  clearInterval(countdownTimer); 
 }
 
 function nextQuestion() {
+  document.getElementById("helpButton").disabled = false;
+  endTime = new Date();
+  addData(currentQuestionIndex);
+
   currentQuestionIndex++;
 
   if (currentQuestionIndex < questions.length) {
     loadQuestion();
   } else {
-    // alert('恭喜，所有题目已经答完了！');
-    // 这里可以添加完成所有题目后的操作
+    clearInterval(countdownTimer); 
     displayResults();
   }
+}
+
+function clickHelp() {
+  helpTime = new Date();
+  document.getElementById("helpButton").disabled = true;
+}
+
+function addData(currentQuestionIndex) {
+  data = {
+    no: currentQuestionIndex + 1,
+    answer: answer,
+    isCorrect: answer === questions[currentQuestionIndex].correctAnswer,
+    startTime: startTime.toLocaleString(),
+    endTime: endTime.toLocaleString(),
+    timeSpent: (endTime - startTime)/1000,
+    helpTime: helpTime.toLocaleString() || '',
+    timeSpentBeforeHelp: helpTime === "" ? "" : (helpTime - startTime)/1000,
+  };
+  gameData.push(data);
+  helpTime = "";
 }
 
 function displayResults() {
   const questionDisplay = document.getElementById('questionDisplay');
   questionDisplay.innerHTML= '';
   const resultsDisplay = document.getElementById('resultsDisplay');
-  resultsDisplay.innerHTML = ''; // 清空之前的内容
+  resultsDisplay.innerHTML = ''; 
 
   const results = [];
 
   questions.forEach((question, index) => {
     const result = {
-      image: question.image,
       userAnswer: question.userAnswer,
       correctAnswer: question.correctAnswer,
       isCorrect: question.userAnswer === question.correctAnswer,
-      explanation: question.explanation || ''
+      explanation: question.explanation || '',
     };
 
-    // 生成结果元素
     const resultElement = document.createElement('div');
     resultElement.classList.add('result');
-    resultElement.style.marginBottom = '30px'; // 添加样式，例如 margin-bottom
+    resultElement.style.marginBottom = '30px'; 
 
-    // 添加题号、对错标识和对应颜色
     const questionNumber = index + 1;
     const resultText = document.createElement('p');
     resultText.innerHTML = `Q${questionNumber}: ${result.isCorrect ? 'correct' : 'wrong'}`;
     resultText.style.color = result.isCorrect ? 'green' : 'red';
     resultElement.appendChild(resultText);
 
-    // 答案解释图片
+
     if (result.explanation) {
       const explanationImage = document.createElement('img');
       explanationImage.src = result.explanation;
-      explanationImage.style.maxWidth = '600px'; // 设置最大宽度为600px
+      explanationImage.style.maxWidth = '700px'; 
       resultElement.appendChild(explanationImage);
     }
   
-
-    // 将结果元素插入到显示区域
     resultsDisplay.appendChild(resultElement);
-
     results.push(result);
   });
 
-  console.log(results); // 这里可以根据需求处理结果数组，比如显示在页面上、存储到数据库等
+  const downloadButton = document.createElement('button');
+  downloadButton.textContent = 'Download Results';
+  downloadButton.addEventListener('click', () => {
+    downloadResults(results);
+  });
+  resultsDisplay.appendChild(downloadButton);
+}
 
+function downloadResults(results) {
+  const correctAnswers = gameData.filter(item => item.isCorrect);
+  const accuracy = (correctAnswers.length / gameData.length);
 
+  const interactionData = {
+    userName: userName,
+    gameData: gameData,
+    accuracy: accuracy
+  };
 
+  // Convert interaction data to JSON string
+  const interactionJson = JSON.stringify(interactionData, null, 2);
+
+  // Create Blob object
+  const blob = new Blob([interactionJson], { type: 'application/json' });
+
+  // Create download link
+  const downloadLink = document.createElement('a');
+  downloadLink.href = URL.createObjectURL(blob);
+
+  // Set download file name
+  downloadLink.download = `${userName}_interaction.json`;
+
+  // Append download link to the body and simulate click
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+
+  // Remove download link
+  document.body.removeChild(downloadLink);
 }

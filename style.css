@@ -28,7 +28,7 @@ body {
 }
 
 .question-image {
-  max-width: 600px;
+  max-width: 700px;
   height: auto;
 }
 
@@ -45,6 +45,7 @@ button {
   font-size: 20px;
   background-color: #f0f0f0;
   border-radius: 8px;
+  margin-bottom: 40px;
 }
 
 .options {
@@ -52,7 +53,7 @@ button {
   display: flex;
   flex-wrap: wrap;
   white-space: nowrap;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   justify-content: flex-start;
 }
 
@@ -62,4 +63,33 @@ button {
   flex-basis: 20%;
   box-sizing: border-box;
   text-align: center;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  z-index: 3;
+}
+
+#nameInput {
+  display: inline;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
