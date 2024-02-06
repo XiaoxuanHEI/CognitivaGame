@@ -113,7 +113,6 @@ const questions = [
   },
 ];
 
-
 let gameData = [];
 let userName;
 let startTime;
@@ -121,7 +120,9 @@ let endTime;
 let timeSpent;
 let helpTime = "";
 let timeSpentBeforeHelp = "";
-let answer;
+let userAnswer;
+let helpRound = 0;
+let timeSpentBeforeHelpSum = 0;
 
 let currentQuestionIndex = 0;
 let countdownTimer;
@@ -141,7 +142,7 @@ function start() {
 // });
 
 function loadQuestion() {
-  clearCountdown(); 
+  clearCountdown();
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -162,7 +163,7 @@ function loadQuestion() {
     radioInput.value = option;
     radioInput.addEventListener('change', () => {
       currentQuestion.userAnswer = option;
-      answer = option;
+      userAnswer = option;
     });
     label.appendChild(radioInput);
     label.appendChild(document.createTextNode(` ${option}`));
@@ -172,8 +173,8 @@ function loadQuestion() {
 
   const nextButton = document.getElementById('nextButton');
   nextButton.textContent = currentQuestionIndex === questions.length - 1 ? 'Show Result' : 'Next';
-  
-  startCountdown(); 
+
+  startCountdown();
 }
 
 function startCountdown() {
@@ -190,18 +191,18 @@ function startCountdown() {
     countdownElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
     if (timeDifference <= 0) {
-      countdownElement.textContent = '时间到!';
-      clearInterval(countdownTimer); 
-      nextQuestion(); 
+      countdownElement.textContent = 'Time up!';
+      clearInterval(countdownTimer);
+      nextQuestion();
     }
   }
 
-  updateCountdown(); 
-  countdownTimer = setInterval(updateCountdown, 1000); 
+  updateCountdown();
+  countdownTimer = setInterval(updateCountdown, 1000);
 }
 
 function clearCountdown() {
-  clearInterval(countdownTimer); 
+  clearInterval(countdownTimer);
 }
 
 function nextQuestion() {
@@ -214,26 +215,28 @@ function nextQuestion() {
   if (currentQuestionIndex < questions.length) {
     loadQuestion();
   } else {
-    clearInterval(countdownTimer); 
+    clearInterval(countdownTimer);
     displayResults();
   }
 }
 
 function clickHelp() {
   helpTime = new Date();
+  helpRound++;
+  timeSpentBeforeHelpSum += (helpTime - startTime) / 1000;
   document.getElementById("helpButton").disabled = true;
 }
 
 function addData(currentQuestionIndex) {
   data = {
     no: currentQuestionIndex + 1,
-    answer: answer,
-    isCorrect: answer === questions[currentQuestionIndex].correctAnswer,
+    userAnswer: userAnswer,
+    isCorrect: userAnswer === questions[currentQuestionIndex].correctAnswer,
     startTime: startTime.toLocaleString(),
     endTime: endTime.toLocaleString(),
-    timeSpent: (endTime - startTime)/1000,
+    timeSpent: (endTime - startTime) / 1000,
     helpTime: helpTime.toLocaleString() || '',
-    timeSpentBeforeHelp: helpTime === "" ? "" : (helpTime - startTime)/1000,
+    timeSpentBeforeHelp: helpTime === "" ? "" : (helpTime - startTime) / 1000,
   };
   gameData.push(data);
   helpTime = "";
@@ -241,9 +244,9 @@ function addData(currentQuestionIndex) {
 
 function displayResults() {
   const questionDisplay = document.getElementById('questionDisplay');
-  questionDisplay.innerHTML= '';
+  questionDisplay.innerHTML = '';
   const resultsDisplay = document.getElementById('resultsDisplay');
-  resultsDisplay.innerHTML = ''; 
+  resultsDisplay.innerHTML = '';
 
   const results = [];
 
@@ -257,7 +260,7 @@ function displayResults() {
 
     const resultElement = document.createElement('div');
     resultElement.classList.add('result');
-    resultElement.style.marginBottom = '30px'; 
+    resultElement.style.marginBottom = '30px';
 
     const questionNumber = index + 1;
     const resultText = document.createElement('p');
@@ -269,10 +272,10 @@ function displayResults() {
     if (result.explanation) {
       const explanationImage = document.createElement('img');
       explanationImage.src = result.explanation;
-      explanationImage.style.maxWidth = '700px'; 
+      explanationImage.style.maxWidth = '700px';
       resultElement.appendChild(explanationImage);
     }
-  
+
     resultsDisplay.appendChild(resultElement);
     results.push(result);
   });
@@ -292,7 +295,9 @@ function downloadResults(results) {
   const interactionData = {
     userName: userName,
     gameData: gameData,
-    accuracy: accuracy
+    accuracy: accuracy,
+    helpRound: helpRound,
+    averageTimeSpentBeforeHelp: parseFloat((timeSpentBeforeHelpSum / helpRound).toFixed(3))
   };
 
   // Convert interaction data to JSON string
@@ -306,7 +311,7 @@ function downloadResults(results) {
   downloadLink.href = URL.createObjectURL(blob);
 
   // Set download file name
-  downloadLink.download = `${userName}_interaction.json`;
+  downloadLink.download = `${userName}_quiz.json`;
 
   // Append download link to the body and simulate click
   document.body.appendChild(downloadLink);
