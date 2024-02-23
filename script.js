@@ -4,112 +4,104 @@ const questions = [
     options: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
     correctAnswer: 'K',
     userAnswer: null,
-    explanation: 'imgs/a1.png'
+    explanation: 'imgs/a1.png',
+    hint: 'Please pay attention to the position of the circle and the shaded segments from left to right.'
   },
   {
     image: 'imgs/q2.png',
     options: ['A', 'B', 'C', 'D', 'E'],
     correctAnswer: 'A',
     userAnswer: null,
-    explanation: 'imgs/a2.png'
+    explanation: 'imgs/a2.png',
+    hint: 'Please look at the total number of circles, the number of circles that are grouped together, and the number of shaded circles.'
   },
   {
     image: 'imgs/q3.png',
-    options: ['Set A', 'Set B', 'Neither set A or set B'],
-    correctAnswer: 'Set B',
-    userAnswer: null,
-    explanation: 'imgs/a3.png'
-  },
-  {
-    image: 'imgs/q4.png',
     options: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
     correctAnswer: 'F',
     userAnswer: null,
-    explanation: 'imgs/a4.png'
+    explanation: 'imgs/a3.png',
+    hint: 'From top to bottom, pay attention to the missing edge. From left to right, pay attention to the shaded segment.'
   },
   {
-    image: 'imgs/q5.png',
+    image: 'imgs/q4.png',
     options: ['A', 'B', 'C', 'D', 'E'],
     correctAnswer: 'D',
     userAnswer: null,
-    explanation: 'imgs/a5.png'
+    explanation: 'imgs/a4.png',
+    hint: 'First only upper storey windows are leaded, then only the lower storey windows are leaded, then all windows are leaded. This pattern then repeats.'
   },
   {
-    image: 'imgs/q6.png',
+    image: 'imgs/q5.png',
     options: ['Set A', 'Set B', 'Neither set A or set B'],
     correctAnswer: 'Neither set A or set B',
     userAnswer: null,
-    explanation: 'imgs/a6.png'
+    explanation: 'imgs/a5.png',
+    hint: 'Let‘s look at the position of circles and crossed square.'
   },
   {
-    image: 'imgs/q7.png',
+    image: 'imgs/q6.png',
     options: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
     correctAnswer: 'H',
     userAnswer: null,
-    explanation: 'imgs/a7.png'
+    explanation: 'imgs/a6.png',
+    hint: 'Please look at the rotation of the line and the total number of edges on the shapes in each box.'
   },
   {
-    image: 'imgs/q8.png',
+    image: 'imgs/q7.png',
     options: ['A', 'B', 'C', 'D', 'E'],
     correctAnswer: 'B',
     userAnswer: null,
-    explanation: 'imgs/a8.png'
+    explanation: 'imgs/a7.png',
+    hint: 'Consider the rules for the two sloping cross-hatching circles separately. And pay attention to the direction that the arrow points to.'
   },
   {
-    image: 'imgs/q9.png',
+    image: 'imgs/q8.png',
     options: ['Set A', 'Set B', 'Neither set A or set B'],
     correctAnswer: 'Set B',
     userAnswer: null,
-    explanation: 'imgs/a9.png'
+    explanation: 'imgs/a8.png',
+    hint: 'Look at the number of crossed boxes and shaded boxes.'
+  },
+  {
+    image: 'imgs/q9.png',
+    options: ['A', 'B', 'C', 'D', 'E', 'F'],
+    correctAnswer: 'C',
+    userAnswer: null,
+    explanation: 'imgs/a9.png',
+    hint: 'Let‘s think of the figures as Tetris. When the entire bottom is filled, that row disappears.'
   },
   {
     image: 'imgs/q10.png',
-    options: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    correctAnswer: 'A',
+    options: ['Set A', 'Set B', 'Neither set A or set B'],
+    correctAnswer: 'Set A',
     userAnswer: null,
-    explanation: 'imgs/a10.png'
+    explanation: 'imgs/a10.png',
+    hint: 'Let‘s focus on the number of empty circles.'
   },
   {
     image: 'imgs/q11.png',
     options: ['A', 'B', 'C', 'D', 'E', 'F'],
-    correctAnswer: 'C',
+    correctAnswer: 'E',
     userAnswer: null,
-    explanation: 'imgs/a11.png'
+    explanation: 'imgs/a11.png',
+    hint: 'Pay attention to the total number of objects and the number of upward arrows.'
   },
   {
     image: 'imgs/q12.png',
     options: ['Set A', 'Set B', 'Neither set A or set B'],
     correctAnswer: 'Set A',
     userAnswer: null,
-    explanation: 'imgs/a12.png'
+    explanation: 'imgs/a12.png',
+    hint: 'Look at the number of half shaded squares.'
   },
   {
     image: 'imgs/q13.png',
     options: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    correctAnswer: 'B',
-    userAnswer: null,
-    explanation: 'imgs/a13.png'
-  },
-  {
-    image: 'imgs/q14.png',
-    options: ['A', 'B', 'C', 'D', 'E', 'F'],
-    correctAnswer: 'E',
-    userAnswer: null,
-    explanation: 'imgs/a14.png'
-  },
-  {
-    image: 'imgs/q15.png',
-    options: ['Set A', 'Set B', 'Neither set A or set B'],
-    correctAnswer: 'Set A',
-    userAnswer: null,
-    explanation: 'imgs/a15.png'
-  },
-  {
-    image: 'imgs/q16.png',
-    options: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
     correctAnswer: 'A',
     userAnswer: null,
-    explanation: 'imgs/a16.png'
+    explanation: 'imgs/a13.png',
+    hint: 'Pay attention to the total number of objects and the number of shaded objects.'
   },
 ];
 
@@ -221,6 +213,7 @@ function nextQuestion() {
 }
 
 function clickHelp() {
+  sendMessage(questions[currentQuestionIndex].hint)
   helpTime = new Date();
   helpRound++;
   timeSpentBeforeHelpSum += (helpTime - startTime) / 1000;
@@ -290,12 +283,16 @@ function displayResults() {
 
 function downloadResults(results) {
   const correctAnswers = gameData.filter(item => item.isCorrect);
-  const accuracy = (correctAnswers.length / gameData.length);
+  const accuracy = parseFloat((correctAnswers.length / gameData.length).toFixed(3));
+
+  const totalTimeSpent = gameData.reduce((total, game) => total + game.timeSpent, 0);
+  const avgTimeSpent = parseFloat(totalTimeSpent / gameData.length.toFixed(3));
 
   const interactionData = {
     userName: userName,
     gameData: gameData,
     accuracy: accuracy,
+    averageTimeSpent: avgTimeSpent,
     helpRound: helpRound,
     averageTimeSpentBeforeHelp: parseFloat((timeSpentBeforeHelpSum / helpRound).toFixed(3))
   };
@@ -319,4 +316,18 @@ function downloadResults(results) {
 
   // Remove download link
   document.body.removeChild(downloadLink);
+}
+
+var websocket = new WebSocket("ws://192.168.2.133:8080"); // 替换为您的 Pepper 机器人的 IP 地址和端口号
+
+websocket.onopen = function (event) {
+  console.log("WebSocket connection open");
+};
+
+websocket.onerror = function (event) {
+  console.error("WebSocket connection error");
+};
+
+function sendMessage(message) {
+  websocket.send(message);
 }
